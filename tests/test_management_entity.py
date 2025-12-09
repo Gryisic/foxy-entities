@@ -1,6 +1,6 @@
 import pytest
 
-from social_media_entities import EntityController, SocialMediaEntity
+from social_media_entities import EntitiesController, SocialMediaEntity
 from social_media_entities.exceptions import (
     EntityTypeException,
     BanningAbcClass,
@@ -32,7 +32,7 @@ def test_exception_entity_type_add_entity(input_value):
     a type that does not correspond to SocialMediaEntity
     """
     with pytest.raises(EntityTypeException):
-        EntityController().add_entity(input_value)
+        EntitiesController().add_entity(input_value)
 
 
 def test_add_entity_incorrect_type_abc_class():
@@ -40,14 +40,14 @@ def test_add_entity_incorrect_type_abc_class():
     Test case prohibiting transfer of abc class
     """
     with pytest.raises(BanningAbcClass):
-        EntityController().add_entity(SocialMediaEntity())
+        EntitiesController().add_entity(SocialMediaEntity())
 
 
 def test_add_entity_position():
     """
     Test case of how getting an entity in a FIFO queue works
     """
-    entity_controller = EntityController()
+    entity_controller = EntitiesController()
     test_entity_1 = TestSocialMediaEntity(test_str="test_entity_1")
     test_entity_2 = TestSocialMediaEntity(test_str="test_entity_2")
     entity_controller.add_entity(test_entity_1).add_entity(test_entity_2)
@@ -61,8 +61,8 @@ def test_unique_sequences_objects():
     """
     Test case virtual storages should not overlap between different objects
     """
-    entity_controller_1 = EntityController()
-    entity_controller_2 = EntityController()
+    entity_controller_1 = EntitiesController()
+    entity_controller_2 = EntitiesController()
     test_entity_1 = TestSocialMediaEntity(test_str="test_entity_1")
     test_entity_2 = TestSocialMediaEntity(test_str="test_entity_2")
     entity_controller_1.add_entity(test_entity_1)
@@ -95,7 +95,7 @@ def test_get_entity_incorrect_type_base(input_value):
     Test case virtual storages should not overlap between different objects
     """
     with pytest.raises(TypeError):
-        EntityController().get_entity(input_value)
+        EntitiesController().get_entity(input_value)
 
 
 def test_get_entity_incorrect_type_abc_class():
@@ -103,7 +103,7 @@ def test_get_entity_incorrect_type_abc_class():
     Test case prohibiting transfer of abc class
     """
     with pytest.raises(BanningAbcClass):
-        EntityController().get_entity(SocialMediaEntity)
+        EntitiesController().get_entity(SocialMediaEntity)
 
 
 def test_get_entity_out_stock():
@@ -111,14 +111,24 @@ def test_get_entity_out_stock():
     Test case exceptions when the passed type is not in the virtual storage
     """
     with pytest.raises(PresenceObjectException):
-        EntityController().get_entity(TestSocialMediaEntity)
+        EntitiesController().get_entity(TestSocialMediaEntity)
 
 
 def test_purge_virtual_storage():
     """
     Test case virtual storage must clear empty entity lists
     """
-    entity_controller = EntityController()
+    entity_controller = EntitiesController()
     entity_controller.add_entity(TestSocialMediaEntity(test_str="test_entity_1"))
     entity_controller.get_entity(TestSocialMediaEntity)
     assert entity_controller.get_virtual_storage() == {}
+
+def test_independence_virtual_storage():
+    """
+    Test case virtual storage must clear empty entity lists
+    """
+    entity_controller = EntitiesController()
+    entity_controller.add_entity(TestSocialMediaEntity(test_str="test_entity_1"))
+    entity_copy = entity_controller.get_virtual_storage()
+    entity_copy["TestSocialMediaEntity2"] = [TestSocialMediaEntity(test_str="test_entity_2")]
+    assert entity_copy != entity_controller.get_virtual_storage()

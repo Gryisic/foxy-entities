@@ -10,7 +10,7 @@ from social_media_entities.exceptions import (
 SocialMediaEntityType = TypeVar("SocialMediaEntityType", bound="SocialMediaEntity")
 
 
-class EntityController:
+class EntitiesController:
     """
     A virtual storage controller class that provides methods
     for adding and retrieving entities with simple Round Robin balancing
@@ -20,7 +20,7 @@ class EntityController:
         self.__entity_virtual_storage: dict[str, list[SocialMediaEntity]] = {}
 
     def get_virtual_storage(self) -> dict[str, list[SocialMediaEntity]]:
-        return self.__entity_virtual_storage
+        return self.__entity_virtual_storage.copy()
 
     @staticmethod
     def update_sequence_entity(
