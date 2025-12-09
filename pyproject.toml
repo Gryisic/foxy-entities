@@ -1,7 +1,7 @@
 [project]
 name = "social-media-entities"
 version = "0.0.1"
-description = "Library for managing social network entities"
+description = "Library for managing social media entities"
 authors = [
     {name = "shapdi", email = "shapranov.work@gmail.com"},
 ]

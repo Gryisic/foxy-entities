@@ -17,10 +17,10 @@ class EntityController:
     """
 
     def __init__(self) -> None:
-        self.__entity_storage: dict[str, list[SocialMediaEntity]] = {}
+        self.__entity_virtual_storage: dict[str, list[SocialMediaEntity]] = {}
 
     def get_virtual_storage(self) -> dict[str, list[SocialMediaEntity]]:
-        return self.__entity_storage
+        return self.__entity_virtual_storage
 
     @staticmethod
     def update_sequence_entity(
@@ -34,15 +34,15 @@ class EntityController:
             raise EntityTypeException(social_media_entity)
         if type(social_media_entity) is SocialMediaEntity:
             raise BanningAbcClass()
-        sequence_entity = self.__entity_storage.get(
+        sequence_entity = self.__entity_virtual_storage.get(
             social_media_entity.__class__.__name__
         )
         if sequence_entity is not None:
-            self.__entity_storage[social_media_entity.__class__.__name__] = (
+            self.__entity_virtual_storage[social_media_entity.__class__.__name__] = (
                 self.update_sequence_entity(sequence_entity, social_media_entity)
             )
         else:
-            self.__entity_storage[social_media_entity.__class__.__name__] = [
+            self.__entity_virtual_storage[social_media_entity.__class__.__name__] = [
                 social_media_entity
             ]
         return self
@@ -55,7 +55,7 @@ class EntityController:
         if social_media_type is SocialMediaEntity:
             raise BanningAbcClass()
 
-        sequence_entity = self.__entity_storage.get(social_media_type.__name__)
+        sequence_entity = self.__entity_virtual_storage.get(social_media_type.__name__)
 
         if not sequence_entity:
             raise PresenceObjectException(social_media_type)
@@ -63,8 +63,8 @@ class EntityController:
         social_media_entity = sequence_entity.pop()
 
         if sequence_entity:
-            self.__entity_storage[social_media_type.__name__] = sequence_entity
+            self.__entity_virtual_storage[social_media_type.__name__] = sequence_entity
         else:
-            del self.__entity_storage[social_media_type.__name__]
+            del self.__entity_virtual_storage[social_media_type.__name__]
 
         return social_media_entity
