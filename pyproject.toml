@@ -1,5 +1,5 @@
 [project]
-name = "social-media-entities"
+name = "foxy-entities"
 version = "0.0.2"
 description = "Library for managing social media entities"
 authors = [

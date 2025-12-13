@@ -1,7 +1,7 @@
 from typing import Self, Type, TypeVar
 
-from social_media_entities.abc import SocialMediaEntity
-from social_media_entities.exceptions import (
+from foxy_entities.abc import SocialMediaEntity
+from foxy_entities.exceptions import (
     EntityTypeException,
     PresenceObjectException,
     BanningAbcClass,

@@ -1,6 +1,6 @@
 import uuid
 
-from social_media_entities import SocialMediaEntity
+from foxy_entities import SocialMediaEntity
 
 
 class TestSocialMediaEntity(SocialMediaEntity):

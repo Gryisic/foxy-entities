@@ -1,7 +1,7 @@
 import pytest
 
-from social_media_entities import EntitiesController, SocialMediaEntity
-from social_media_entities.exceptions import (
+from foxy_entities import EntitiesController, SocialMediaEntity
+from foxy_entities.exceptions import (
     EntityTypeException,
     BanningAbcClass,
     PresenceObjectException,

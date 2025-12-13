@@ -10,9 +10,10 @@ The main goal is to create a social media entity management system for shared st
 
 ~~~python
 
-from social_media_entities import SocialMediaEntity  
-  
-class FakeSocialMediaEntity(SocialMediaEntity):  
+from foxy_entities import SocialMediaEntity
+
+
+class FakeSocialMediaEntity(SocialMediaEntity):
     fake_str: str
 
 
