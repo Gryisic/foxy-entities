@@ -16,6 +16,11 @@ SocialMediaEntityType = TypeVar("SocialMediaEntityType", bound=SocialMediaEntity
 
 
 class EntitiesController:
+    """
+        A virtual storage controller class that provides methods
+        for adding and retrieving entities with simple Round Robin balancing
+    """
+
     def __init__(self) -> None:
         self.__entity_virtual_storage: dict[str, list[SocialMediaEntity]] = {}
 
